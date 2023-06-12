@@ -1,15 +1,13 @@
-#include 
-
-//motors
+/*motors*/
 //needs change
 #define motor1      9    // right wheel
 #define motor2      7	 // left wheel
-#define motor1R     8    // right wheel reverse
-#define motor2R     6	 // left wheel reverse
+//#define motor1R     8    // right wheel reverse
+//#define motor2R     6	 // left wheel reverse
 #define motor1Speed 6	 // right wheel speed 
 #define motor2Speed 5	 // left wheel speed
 
-//ir sensors
+/*ir sensors*/
 //needs change
 #define SensorCount 8
 const int irSensorPins[SensorCount] = {2, 4, 5, 12, 13, 14, 15, 27};
@@ -17,7 +15,10 @@ uint16_t sensorValues[SensorCount];
 uint16_t position;
 uint16_t readsum;
 
-//functions declaration
+/*other pins*/
+#define buzzerPin 99
+
+/*functions declaration*/
 void forward(int speed);
 void back(int speed);
 void right(int speed);
@@ -25,17 +26,19 @@ void left(int speed);
 
 void irScan();
 
+void buzzer();
+
+/*start main*/
 void setup() {
 	//pin declaration
 	pinMode(motor1, OUTPUT);
 	pinMode(motor2, OUTPUT);
-	pinMode(motor1R, OUTPUT);
-	pinMode(motor2R, OUTPUT);
 	pinMode(motor1Speed, OUTPUT);
 	pinMode(motor2Speed, OUTPUT);
 	for (int i = 0; i < SensorCount; i++) {
 		pinMode(irSensorPins[i], INPUT);
 	}
+	pinMode(buzzerPin, OUTPUT);
 
 }
 
@@ -43,9 +46,30 @@ void loop() {
 
 }
 
-
-void forward(speed){
-
+/*functions*/
+void forward(speed1,speed2){
+	digitalWrite(motor1,1);
+	digitalWrite(motor2,1);
+	analogWrite(motor1Speed,speed1);
+	analogWrite(motor2Speed,speed2);
+}
+void back(speed1,speed2){
+	digitalWrite(motor1,0);
+	digitalWrite(motor2,0);
+	analogWrite(motor1Speed,speed1);
+	analogWrite(motor2Speed,speed2);
+}
+void right(speed1,speed2){
+	digitalWrite(motor1,0);
+	digitalWrite(motor2,1);
+	analogWrite(motor1Speed,speed1);
+	analogWrite(motor2Speed,speed2);
+}
+void left(speed1,speed2){
+	digitalWrite(motor1,1);
+	digitalWrite(motor2,0);
+	analogWrite(motor1Speed,speed1);
+	analogWrite(motor2Speed,speed2);
 }
 
 void irScan(){
@@ -93,4 +117,10 @@ void irScan(){
 		irFull= false, irRight= false, irLeft= false, irNothing= false, irMid= false, Obstacle= false;
 	irLeft=true;
 	}
+}
+
+void buzzer(){
+	tone(buzzerPin, 1000);
+	delay(100);
+	noTone(buzzer);
 }
