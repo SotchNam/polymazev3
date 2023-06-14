@@ -1,11 +1,4 @@
-/*motors*/
-//needs change
-#define motor1      9    // right wheel
-#define motor2      7	 // left wheel
-//#define motor1R     8    // right wheel reverse
-//#define motor2R     6	 // left wheel reverse
-#define motor1Speed 6	 // right wheel speed 
-#define motor2Speed 5	 // left wheel speed
+#include "motors.h"
 
 /*ir sensors*/
 //needs change
@@ -19,11 +12,6 @@ uint16_t readsum;
 #define buzzerPin 99
 
 /*functions declaration*/
-void forward(int speed);
-void back(int speed);
-void right(int speed);
-void left(int speed);
-
 void irScan();
 
 void buzzer();
@@ -47,31 +35,6 @@ void loop() {
 }
 
 /*functions*/
-void forward(speed1,speed2){
-	digitalWrite(motor1,1);
-	digitalWrite(motor2,1);
-	analogWrite(motor1Speed,speed1);
-	analogWrite(motor2Speed,speed2);
-}
-void back(speed1,speed2){
-	digitalWrite(motor1,0);
-	digitalWrite(motor2,0);
-	analogWrite(motor1Speed,speed1);
-	analogWrite(motor2Speed,speed2);
-}
-void right(speed1,speed2){
-	digitalWrite(motor1,0);
-	digitalWrite(motor2,1);
-	analogWrite(motor1Speed,speed1);
-	analogWrite(motor2Speed,speed2);
-}
-void left(speed1,speed2){
-	digitalWrite(motor1,1);
-	digitalWrite(motor2,0);
-	analogWrite(motor1Speed,speed1);
-	analogWrite(motor2Speed,speed2);
-}
-
 void irScan(){
 	//read analog values
 	sensorValues[0]= analogRead(irSensorPins[0]);
@@ -122,5 +85,5 @@ void irScan(){
 void buzzer(){
 	tone(buzzerPin, 1000);
 	delay(100);
-	noTone(buzzer);
+	noTone(buzzerPin);
 }
