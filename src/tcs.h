@@ -15,7 +15,7 @@ float red, green, blue;
 
 
 //for outputs
-enum Color {
+enum Colors {
     RED,
     GREEN,
     BLUE,
@@ -23,7 +23,7 @@ enum Color {
     MAGENTA,
     CYAN
 };
-Color color;
+Colors color;
 
 //something to do with converting to something we see better idk
 //on another thought isnt this used for live visuals?

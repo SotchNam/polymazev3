@@ -2,7 +2,7 @@
 #include "qtr.h"
 #include "tcs.h"
 #include "buzzer.h"
-
+#include "pid.h"
 
 /*start main*/
 void setup() {
@@ -27,4 +27,3 @@ void setup() {
 void loop() {
 	//to be filled with logic
 }
-
