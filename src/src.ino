@@ -1,13 +1,8 @@
 #include "motors.h"
 #include "qtr.h"
 #include "tcs.h"
+#include "buzzer.h"
 
-/*other pins*/
-//needs change
-#define buzzerPin 99
-
-/*functions declaration*/
-void buzzer();
 
 /*start main*/
 void setup() {
@@ -25,6 +20,7 @@ void setup() {
 	ledSetup();
 	//buzzer setup
 	pinMode(buzzerPin, OUTPUT);
+	//indicate the beginning of the end
 	buzzer();
 }
 
@@ -32,9 +28,3 @@ void loop() {
 	//to be filled with logic
 }
 
-/*functions*/
-void buzzer(){
-	tone(buzzerPin, 1000);
-	delay(100);
-	noTone(buzzerPin);
-}
