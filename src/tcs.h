@@ -11,7 +11,7 @@
 
 Adafruit_TCS34725 tcs = Adafruit_TCS34725();
 //for sensor input
-uint16_t red, green, blue;
+float red, green, blue;
 
 
 //for outputs
@@ -39,7 +39,7 @@ void gammaSetup(){
 }
 
 //to be in setup code
-void ledSetup{}{
+void ledSetup(){
 	ledcAttachPin(redpin, 1);
 	ledcSetup(1, 12000, 8);
 	ledcAttachPin(greenpin, 2);
