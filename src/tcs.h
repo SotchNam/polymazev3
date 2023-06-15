@@ -28,7 +28,7 @@ Color color;
 //something to do with converting to something we see better idk
 //on another thought isnt this used for live visuals?
 byte gammatable[256];
-void setupGama(){
+void gammaSetup(){
 	for (int i=0; i<256; i++) {
 		float x = i;
 		x /= 255;
