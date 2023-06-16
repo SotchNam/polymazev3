@@ -1,7 +1,7 @@
 /*ir sensors*/
 //needs change
 #define SensorCount 8
-const int irSensorPins[SensorCount] = {2, 4, 5, 12, 13, 14, 15, 27};
+const int irSensorPins[SensorCount] = {25, 36, 39, 34, 35, 32, 33, 26};
 uint16_t sensorValues[SensorCount];
 uint16_t position;
 uint16_t readsum;
@@ -35,14 +35,14 @@ void irScan(){
 	}
 
 	if( readsum>0) {position = position/readsum;} 
-	// value is between 0 and 8000
+	// value is between 0 and 7000
 	// 0 to the right, 1000 for each sensor 
-	// 8000 to the left 
+	// 7000 to the left 
 
 	//ngl hate this binary logic here
 	//pid can use position as error, target is always 4000
 	///*
-	if (position>=3000 || position <=5000) {
+	if (position>=3000 || position <=4000) {
 		//checks for side sensors if their readings are weak or not
 		if(sensorValues[5]<600 && sensorValues[2]<600 && sensorValues[3]>600 && sensorValues[4]>600){
 		irMid=true;
@@ -60,7 +60,7 @@ void irScan(){
 	else if (position<3000){
 	irRight=true;
 	}
-	else if (position>5000){
+	else if (position>4000){
 	irLeft=true;
 	}
 	//*/

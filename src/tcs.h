@@ -5,9 +5,9 @@
 //for rgb led
 // use ~560  ohm resistor between Red & Blue, ~1K for green (its brighter)
 //needs change
-#define redpin 3
-#define greenpin 5
-#define bluepin 6
+#define redpin 5
+#define greenpin 17
+#define bluepin 16
 
 Adafruit_TCS34725 tcs = Adafruit_TCS34725();
 //for sensor input

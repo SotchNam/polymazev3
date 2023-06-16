@@ -2,7 +2,7 @@
 
 //needs change
 //make sure to know the hardware timer pins
-#define buzzerPin 99
+#define buzzerPin 23
 
 hw_timer_t *buzzerTimer = NULL;
 
