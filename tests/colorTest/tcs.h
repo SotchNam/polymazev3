@@ -97,13 +97,11 @@ void lightLed(){
 			green = 0;
 			blue = 255;
 		break;
-		/*
 		default:
 			red = 0;
 			green = 0;
 			blue = 0;
 		break;
-		*/
 	}
 	//ngl still not sure bout the gammatable but adafruit say it gud so
 	ledcWrite(1, gammatable[(int)red]);

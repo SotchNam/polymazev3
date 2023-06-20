@@ -1,6 +1,6 @@
 hwtimer buzzerpin   = 23 d23
-gpio    motor1      = 13 d13
-gpio    motor1speed = 12 d12
+gpio    motor1      = 12 d13
+gpio    motor1speed = 13 d12
 gpio    motor2      = 15 d15
 gpio    motor2speed = 4  d4
 gpio    red         = 5  d5
