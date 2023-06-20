@@ -35,11 +35,11 @@ void right(int speed1,int speed2){
 }
 
 void setMotors(int speed1, int speed2){
-	if (speed1 > 0) digitalWrite(motor1,1);
-	else digitalWrite(motor1,0);
+	if (speed1 > 0) digitalWrite(motor1,0);
+	else digitalWrite(motor1,1);
 	analogWrite(motor1Speed,abs(speed1));
 
-	if (speed2 > 0) digitalWrite(motor2,1);
-	else digitalWrite(motor2,0);
+	if (speed2 > 0) digitalWrite(motor2,0);
+	else digitalWrite(motor2,1);
 	analogWrite(motor2Speed,abs(speed2));
 }
