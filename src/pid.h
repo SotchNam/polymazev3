@@ -15,6 +15,8 @@ const uint8_t maxspeeda = 200;
 const uint8_t maxspeedb = 200;
 const uint8_t basespeeda = 120;
 const uint8_t basespeedb = 120;
+int motorspeeda=0;
+int motorspeedb=0;
 
 //calcs corrected motor speeds
 void pidControl() {
@@ -27,8 +29,8 @@ void pidControl() {
 
   int motorspeed = P*Kp + I*Ki + D*Kd; //calculate the correction
   
-  int motorspeeda = basespeeda + motorspeed;
-  int motorspeedb = basespeedb - motorspeed;
+  motorspeeda = basespeeda + motorspeed;
+  motorspeedb = basespeedb - motorspeed;
   
   if (motorspeeda > maxspeeda) {
     motorspeeda = maxspeeda;

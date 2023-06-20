@@ -34,6 +34,7 @@ void right(int speed1,int speed2){
 	analogWrite(motor2Speed,speed2);
 }
 
+//allows bidirectional control from one function
 void setMotors(int speed1, int speed2){
 	if (speed1 > 0) digitalWrite(motor1,0);
 	else digitalWrite(motor1,1);
