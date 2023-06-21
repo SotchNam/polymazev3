@@ -13,15 +13,38 @@ Adafruit_TCS34725 tcs = Adafruit_TCS34725();
 //for sensor input
 float red, green, blue;
 
+//color ranges
+//need changes
+const uint16_t lower_bounds[][3] = {
+  {130, 0, 0},     // red
+  {0, 130, 0},    // green
+  {0, 0, 130},   // blue
+
+  {0, 130, 130},    // cyan
+  {130, 0, 130},   // magenta
+  {130, 130, 0}     // yellow
+};
+
+const uint16_t upper_bounds[][3] = {
+  {255, 130, 130},     // red
+  {130, 255, 130},   // green
+  {130, 130, 255},   // blue
+
+  {130, 255, 255},   // cyan
+  {255, 130, 255},   // magenta
+  {255, 255, 130}     // yellow
+};
+
 
 //for outputs
 enum Colors {
     RED,
     GREEN,
     BLUE,
-    YELLOW,
+    CYAN,
     MAGENTA,
-    CYAN
+    YELLOW,
+    NO_COLOR
 };
 Colors color;
 
@@ -50,18 +73,19 @@ void ledSetup(){
 
 //detects the colors
 void detectColor(){
-	tcs.setInterrupt(false);  // turn on LED
-	delay(60);  // takes 50ms to read
+	//reading the colors
 	tcs.getRGB(&red, &green, &blue);
-	tcs.setInterrupt(true);  // turn off LED
-	/*
-	//gibirish values pls fix //needs change
-	if (red > 12 && red < 30   &&  grn > 40 && grn < 70    &&  blu > 33 && blu < 70)   color = "RED";
-	else if (red > 50 && red < 95   &&  grn > 35 && grn < 70    &&  blu > 45 && blu < 85)   color = "GREEN";
-	else if (red > 10 && red < 20   &&  grn > 10 && grn < 25    &&  blu > 20 && blu < 38)   color = "YELLOW";
-	else if (red > 65 && red < 125  &&  grn > 65 && grn < 115   &&  blu > 32 && blu < 65)   color = "BLUE";
-	else  color = "NO_COLOR";
-	*/
+
+	//detecting the color
+	int i;
+	for(i=0; i<6; i++){
+		if (red >= lower_bounds[i][0] && red <= upper_bounds[i][0] &&
+		green >= lower_bounds[i][1] && green <= upper_bounds[i][1] &&
+		blue >= lower_bounds[i][2] && blue <= upper_bounds[i][2]) {
+			color=Colors(i);
+		}
+		else  color = NO_COLOR;
+	}
 }
 
 //output detected color to the rgb led, values should be ok
@@ -87,15 +111,15 @@ void lightLed(){
 			green = 255;
 			blue = 255;
 		break;
-		case YELLOW:
-			red = 255;
-			green = 255;
-			blue = 0;
-		break;
 		case MAGENTA:
 			red = 255;
 			green = 0;
 			blue = 255;
+		break;
+		case YELLOW:
+			red = 255;
+			green = 255;
+			blue = 0;
 		break;
 		default:
 			red = 0;
