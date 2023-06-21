@@ -5,8 +5,8 @@ const int irSensorPins[SensorCount] = {25, 36, 39, 34, 35, 32, 33, 26};
 uint16_t sensorValues[SensorCount];
 uint16_t position;
 uint16_t readsum;
-const int leftbound = 3000;
-const int rightbound = 4000;
+const int leftbound = 2000;//3000;
+const int rightbound = 5000;//4000;
 const int thres = 2000; //threshhold value, max sensor reading is 4095
 bool irFull = false;
 bool irRight = false;
@@ -46,13 +46,15 @@ void irScan(){
 void detectPostion(){
 	//ngl hate this binary logic here
 	//pid can use position as error, target is always 4000
-	if (position>=leftbound || position <=rightbound) {
+	if (position>=leftbound && position <=rightbound) {
 		//checks for side sensors if their readings are weak or not
 		if(sensorValues[5]<thres && sensorValues[2]<thres && sensorValues[3]>thres && sensorValues[4]>thres){
 			irMid=true;
 		}
-		//checks if most readings are high
-		else if (readsum>(thres*9)){
+		//checks if all (not most) readings are high
+		//else if (readsum>(thres*9)){
+		else if (sensorValue[0] >= thres && sensorValue[1] >= thres && sensorValue[2] >= thres && sensorValue[3] >= thres &&
+      sensorValue[4] >= thres && sensorValue[5] >= thres && sensorValue[6] >= thres && sensorValue[7] >= thres && sensorValue[8] >= thres) {
 			irFull=true;
 		}
 		//else the position is mid cuz there's nothing
