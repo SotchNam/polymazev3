@@ -4,8 +4,10 @@
 #include "buzzer.h"
 #include "pid.h"
 
-int turningSpeed=150; //speed that it turns with
-int turningTime=2000; //time to turn
+int turningSpeed= 150; //speed that it turns with
+int turningTime= 1500; //time to turn
+int motorspeed1 = 150;
+int motorspeed2 = 150;
 
 /*start main*/
 void setup() {
@@ -33,10 +35,12 @@ void loop() {
 	detectPostion();
 
 	if (!irNothing){//checks for line existance
-		if(!(irRight || irLeft || irFull)){
-			pidControl();
-			setMotors(motorspeeda, motorspeedb);
+		if(!(irRight || irLeft || irFull)){//no intersections
+			//pidControl();
+			//setMotors(motorspeed1, motorspeed2); //apply correction speed
+			forward(motorspeed1,motorspeed2);
 		}
+
 		//follow right wall 
 		else { //intersection or turn
 			if(irRight || irFull) {

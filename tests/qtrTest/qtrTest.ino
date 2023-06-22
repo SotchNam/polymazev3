@@ -1,4 +1,6 @@
 #include "qtr.h"
+#include "motors.h"
+#include "buzzer.h"
 
 void setup() {
 	Serial.begin(9600);
@@ -6,11 +8,21 @@ void setup() {
 	for (int i = 0; i < SensorCount; i++) {
 		pinMode(irSensorPins[i], INPUT);
 	}
+	
+	//motor setup
+	pinMode(motor1, OUTPUT);
+	pinMode(motor2, OUTPUT);
+	pinMode(motor1Speed, OUTPUT);
+	pinMode(motor2Speed, OUTPUT);
+	forward(0,0);
+	pinMode(buzzerPin, OUTPUT);
+	buzzer();
 }
 
 void loop() {
 	int i;
 	irScan();
+	detectPostion();
 	Serial.print("sensorValues: ");
 		for(i=0; i< SensorCount; i++){
 			Serial.print(sensorValues[i]);
@@ -31,4 +43,5 @@ void loop() {
 	Serial.println(irNothing);
 	Serial.print("irMid: ");
 	Serial.println(irMid);
+	delay(200);
 }

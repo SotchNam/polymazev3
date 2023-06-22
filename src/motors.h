@@ -1,8 +1,8 @@
 /*motors*/
 //needs change
-#define motor1      12   // right wheel
-#define motor2      15   // left wheel
-#define motor1Speed 13	 // right wheel speed 
+#define motor1      13   // right wheel
+#define motor2      12   // left wheel
+#define motor1Speed 15	 // right wheel speed 
 #define motor2Speed 4	 // left wheel speed
 
 

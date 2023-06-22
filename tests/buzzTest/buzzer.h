@@ -8,6 +8,7 @@ hw_timer_t *buzzerTimer = NULL;
 
 void buzzerCallback() {
   noTone(buzzerPin);
+  digitalWrite(buzzerPin, LOW); // Turn off the buzzer pin
 }
 
 void buzzer() {

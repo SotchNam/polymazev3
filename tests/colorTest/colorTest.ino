@@ -23,5 +23,7 @@ void loop() {
 	Serial.print(", ");
 	Serial.print(blue); 
 	Serial.println(" ");
+	Serial.print(color);
+	Serial.println(" ");
 	lightLed();
 }

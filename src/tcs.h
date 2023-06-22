@@ -16,23 +16,23 @@ float red, green, blue;
 //color ranges
 //need changes
 const uint16_t lower_bounds[][3] = {
-  {130, 0, 0},     // red
-  {0, 130, 0},    // green
-  {0, 0, 130},   // blue
+  {115, 0, 0},     // red
+  {0, 115, 0},    // green
+  {0, 0, 115},   // blue
 
-  {0, 130, 130},    // cyan
-  {130, 0, 130},   // magenta
-  {130, 130, 0}     // yellow
+  {0, 115, 115},    // cyan
+  {150, 0, 115},   // magenta
+  {115, 115, 0}     // yellow
 };
 
 const uint16_t upper_bounds[][3] = {
-  {255, 130, 130},     // red
-  {130, 255, 130},   // green
-  {130, 130, 255},   // blue
+  {255, 115, 115},     // red
+  {115, 255, 115},   // green
+  {115, 115, 255},   // blue
 
-  {130, 255, 255},   // cyan
-  {255, 130, 255},   // magenta
-  {255, 255, 130}     // yellow
+  {115, 255, 255},   // cyan
+  {255, 115, 255},   // magenta
+  {255, 255, 115}     // yellow
 };
 
 
@@ -128,7 +128,7 @@ void lightLed(){
 		break;
 	}
 	//ngl still not sure bout the gammatable but adafruit say it gud so
-	ledcWrite(1, gammatable[(int)red]);
-	ledcWrite(2, gammatable[(int)green]);
-	ledcWrite(3, gammatable[(int)blue]);
+	ledcWrite(1,255- gammatable[(int)red]);
+	ledcWrite(2, 255-gammatable[(int)green]);
+	ledcWrite(3, 255-gammatable[(int)blue]);
 }
