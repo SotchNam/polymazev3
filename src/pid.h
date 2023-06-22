@@ -11,10 +11,10 @@ int D;
 int lastError = 0;
 
 // Motor speed variables (choose between 0 - no speed, and 255 - maximum speed)
-const uint8_t maxspeeda = 200;
-const uint8_t maxspeedb = 200;
-const uint8_t basespeeda = 120;
-const uint8_t basespeedb = 120;
+const uint8_t maxspeeda = 255;
+const uint8_t maxspeedb = 255;
+const uint8_t basespeeda = 150;
+const uint8_t basespeedb = 150;
 int motorspeeda=0;
 int motorspeedb=0;
 

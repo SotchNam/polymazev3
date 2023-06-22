@@ -48,15 +48,15 @@ void detectPostion(){
 	//ngl hate this binary logic here
 	//pid can use position as error, target is always 4000
 	if (position>=leftbound && position <=rightbound) {
-		//checks for side sensors if their readings are weak or not
-		if(sensorValues[6]<thres && sensorValues[1]<thres && sensorValues[3]>thres && sensorValues[4]>thres){
-			irMid=true;
-		}
 		//checks if all (not most) readings are high
 		//else if (readsum>(thres*9)){
-		else if (sensorValues[0] >= thres && sensorValues[1] >= thres && sensorValues[2] >= thres && sensorValues[3] >= thres &&
+		if (sensorValues[0] >= thres && sensorValues[1] >= thres && sensorValues[2] >= thres && sensorValues[3] >= thres &&
       sensorValues[4] >= thres && sensorValues[5] >= thres && sensorValues[6] >= thres && sensorValues[7] >= thres && sensorValues[8] >= thres) {
 			irFull=true;
+		}
+		//checks for side sensors if their readings are weak or not
+		else if(sensorValues[3]>thres && sensorValues[4]>thres){
+			irMid=true;
 		}
 		//else the position is mid cuz there's nothing
 		//readings wont be 0 when nothing cuz physics, else that'd be a problem 
