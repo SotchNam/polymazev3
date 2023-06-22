@@ -3,8 +3,12 @@
 #define SensorCount 8
 const int irSensorPins[SensorCount] = {25, 36, 39, 34, 35, 32, 33, 26};
 uint16_t sensorValues[SensorCount];
-uint16_t position;
+//uint16_t position;
+float position;
 uint16_t readsum;
+const int leftbound = 2000;//3000;
+const int rightbound = 5000;//4000;
+const int thres = 3200; //threshhold value, max sensor reading is 4095
 bool irFull = false;
 bool irRight = false;
 bool irLeft = false;
@@ -25,7 +29,6 @@ void irScan(){
 	//resets vars
 	position=0;
 	readsum=0;
-	irFull= false, irRight= false, irLeft= false, irNothing= false, irMid= false;
 	int i;
 
 	// calculating weighted average
@@ -38,30 +41,33 @@ void irScan(){
 	// value is between 0 and 7000
 	// 0 to the right, 1000 for each sensor 
 	// 7000 to the left 
+}
 
+void detectPostion(){
+	irFull= false, irRight= false, irLeft= false, irNothing= false, irMid= false;
 	//ngl hate this binary logic here
 	//pid can use position as error, target is always 4000
-	///*
-	if (position>=3000 || position <=4000) {
+	if (position>=leftbound && position <=rightbound) {
 		//checks for side sensors if their readings are weak or not
-		if(sensorValues[5]<600 && sensorValues[2]<600 && sensorValues[3]>600 && sensorValues[4]>600){
-		irMid=true;
+		if(sensorValues[6]<thres && sensorValues[1]<thres && sensorValues[3]>thres && sensorValues[4]>thres){
+			irMid=true;
 		}
-		//checks if most readings are high
-		else if (readsum>4000){
-		irFull=true;
+		//checks if all (not most) readings are high
+		//else if (readsum>(thres*9)){
+		else if (sensorValues[0] >= thres && sensorValues[1] >= thres && sensorValues[2] >= thres && sensorValues[3] >= thres &&
+      sensorValues[4] >= thres && sensorValues[5] >= thres && sensorValues[6] >= thres && sensorValues[7] >= thres && sensorValues[8] >= thres) {
+			irFull=true;
 		}
 		//else the position is mid cuz there's nothing
 		//readings wont be 0 when nothing cuz physics, else that'd be a problem 
 		else{
-		irNothing=true;
+			irNothing=true;
 		}
 	}
-	else if (position<3000){
-	irRight=true;
+	else if (position<leftbound){
+		irRight=true;
 	}
-	else if (position>4000){
-	irLeft=true;
+	else if (position>rightbound){
+		irLeft=true;
 	}
-	//*/
 }

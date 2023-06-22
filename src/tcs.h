@@ -13,15 +13,38 @@ Adafruit_TCS34725 tcs = Adafruit_TCS34725();
 //for sensor input
 float red, green, blue;
 
+//color ranges
+//need changes
+const uint16_t lower_bounds[][3] = {
+  {115, 0, 0},     // red
+  {0, 115, 0},    // green
+  {0, 0, 115},   // blue
+
+  {0, 115, 115},    // cyan
+  {150, 0, 115},   // magenta
+  {115, 115, 0}     // yellow
+};
+
+const uint16_t upper_bounds[][3] = {
+  {255, 115, 115},     // red
+  {115, 255, 115},   // green
+  {115, 115, 255},   // blue
+
+  {115, 255, 255},   // cyan
+  {255, 115, 255},   // magenta
+  {255, 255, 115}     // yellow
+};
+
 
 //for outputs
 enum Colors {
     RED,
     GREEN,
     BLUE,
-    YELLOW,
+    CYAN,
     MAGENTA,
-    CYAN
+    YELLOW,
+    NO_COLOR
 };
 Colors color;
 
@@ -50,18 +73,19 @@ void ledSetup(){
 
 //detects the colors
 void detectColor(){
-	tcs.setInterrupt(false);  // turn on LED
-	delay(60);  // takes 50ms to read
+	//reading the colors
 	tcs.getRGB(&red, &green, &blue);
-	tcs.setInterrupt(true);  // turn off LED
-	/*
-	//gibirish values pls fix //needs change
-	if (red > 12 && red < 30   &&  grn > 40 && grn < 70    &&  blu > 33 && blu < 70)   color = "RED";
-	else if (red > 50 && red < 95   &&  grn > 35 && grn < 70    &&  blu > 45 && blu < 85)   color = "GREEN";
-	else if (red > 10 && red < 20   &&  grn > 10 && grn < 25    &&  blu > 20 && blu < 38)   color = "YELLOW";
-	else if (red > 65 && red < 125  &&  grn > 65 && grn < 115   &&  blu > 32 && blu < 65)   color = "BLUE";
-	else  color = "NO_COLOR";
-	*/
+
+	//detecting the color
+	int i;
+	for(i=0; i<6; i++){
+		if (red >= lower_bounds[i][0] && red <= upper_bounds[i][0] &&
+		green >= lower_bounds[i][1] && green <= upper_bounds[i][1] &&
+		blue >= lower_bounds[i][2] && blue <= upper_bounds[i][2]) {
+			color=Colors(i);
+		}
+		else  color = NO_COLOR;
+	}
 }
 
 //output detected color to the rgb led, values should be ok
@@ -87,15 +111,15 @@ void lightLed(){
 			green = 255;
 			blue = 255;
 		break;
-		case YELLOW:
-			red = 255;
-			green = 255;
-			blue = 0;
-		break;
 		case MAGENTA:
 			red = 255;
 			green = 0;
 			blue = 255;
+		break;
+		case YELLOW:
+			red = 255;
+			green = 255;
+			blue = 0;
 		break;
 		default:
 			red = 0;
@@ -104,7 +128,7 @@ void lightLed(){
 		break;
 	}
 	//ngl still not sure bout the gammatable but adafruit say it gud so
-	ledcWrite(1, gammatable[(int)red]);
-	ledcWrite(2, gammatable[(int)green]);
-	ledcWrite(3, gammatable[(int)blue]);
+	ledcWrite(1,255- gammatable[(int)red]);
+	ledcWrite(2, 255-gammatable[(int)green]);
+	ledcWrite(3, 255-gammatable[(int)blue]);
 }

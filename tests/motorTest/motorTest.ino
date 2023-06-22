@@ -9,7 +9,8 @@ void setup() {
 }
 
 void loop() {
-	int speed1, speed2=255;
+	int speed1 = 255;
+	int speed2=255;
 
 	forward(speed1,speed2);
 	delay(2500);
