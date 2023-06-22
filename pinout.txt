@@ -16,5 +16,6 @@ adc     qtr7        = 33 d33
 adc     qtr8        = 26 d26
 sda     color       = 21 d21
 sdc     color       = 22 d22
+adc 	irFront     = 17 d27
 
-remaining safe to use: 14,18,19,27
+remaining safe to use: 18,19,27

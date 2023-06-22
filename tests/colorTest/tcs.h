@@ -15,7 +15,7 @@ float red, green, blue;
 
 //color ranges
 //need changes
-const uint16_t lower_bounds[][3] = {
+const float lower_bounds[][3] = {
   {115, 0, 0},     // red
   {0, 115, 0},    // green
   {0, 0, 115},   // blue
@@ -25,7 +25,7 @@ const uint16_t lower_bounds[][3] = {
   {115, 115, 0}     // yellow
 };
 
-const uint16_t upper_bounds[][3] = {
+const float upper_bounds[][3] = {
   {255, 115, 115},     // red
   {115, 255, 115},   // green
   {115, 115, 255},   // blue
@@ -79,12 +79,15 @@ void detectColor(){
 	//detecting the color
 	int i;
 	for(i=0; i<6; i++){
-		if (red >= lower_bounds[i][0] && red <= upper_bounds[i][0] &&
-		green >= lower_bounds[i][1] && green <= upper_bounds[i][1] &&
-		blue >= lower_bounds[i][2] && blue <= upper_bounds[i][2]) {
+		if (red > lower_bounds[i][0] && red < upper_bounds[i][0] &&
+		green > lower_bounds[i][1] && green < upper_bounds[i][1] &&
+		blue > lower_bounds[i][2] && blue < upper_bounds[i][2]) {
 			color=Colors(i);
+			break;
 		}
-		else  color = NO_COLOR;
+		else { 
+			color = NO_COLOR;
+		}
 	}
 }
 
@@ -118,7 +121,7 @@ void lightLed(){
 		break;
 		case YELLOW:
 			red = 255;
-			green = 255;
+			green = 225;
 			blue = 0;
 		break;
 		default:
@@ -128,7 +131,7 @@ void lightLed(){
 		break;
 	}
 	//ngl still not sure bout the gammatable but adafruit say it gud so
-	ledcWrite(1,255- gammatable[(int)red]);
-	ledcWrite(2, 255-gammatable[(int)green]);
-	ledcWrite(3, 255-gammatable[(int)blue]);
+	ledcWrite(1, gammatable[(int)red]);
+	ledcWrite(2, gammatable[(int)green]);
+	ledcWrite(3, gammatable[(int)blue]);
 }

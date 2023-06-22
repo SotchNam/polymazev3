@@ -8,12 +8,17 @@ float position;
 uint16_t readsum;
 const int leftbound = 2000;//3000;
 const int rightbound = 5000;//4000;
-const int thres = 3200; //threshhold value, max sensor reading is 4095
+const int thres = 2400; //threshhold value, max sensor reading is 4095
 bool irFull = false;
 bool irRight = false;
 bool irLeft = false;
 bool irNothing = false;
 bool irMid = false;
+
+const int thresFr=2000;
+const int irFrontpin = 27;
+float frontReading = 0;
+bool irFront = false;
 
 void irScan(){
 	//read analog values
@@ -25,6 +30,8 @@ void irScan(){
 	sensorValues[5]= analogRead(irSensorPins[5]);
 	sensorValues[6]= analogRead(irSensorPins[6]);
 	sensorValues[7]= analogRead(irSensorPins[7]);
+
+	frontReading = analogRead(irFrontpin);
 
 	//resets vars
 	position=0;
@@ -44,26 +51,26 @@ void irScan(){
 }
 
 void detectPostion(){
+	irFront= false;
+	if(frontReading>thresFr) irFront=true;
+
 	irFull= false, irRight= false, irLeft= false, irNothing= false, irMid= false;
 	//ngl hate this binary logic here
 	//pid can use position as error, target is always 4000
-	if (position>=leftbound && position <=rightbound) {
+	if ( sensorValues[0] >=thres ||sensorValues[1] >=thres ||sensorValues[2] >=thres ||sensorValues[3] >=thres ||sensorValues[4] >=thres ||sensorValues[5] >=thres ||sensorValues[6] >=thres ||sensorValues[7] >=thres){
+	}
+	else if (position>=leftbound && position <=rightbound) {
 		//checks if all (not most) readings are high
-		//else if (readsum>(thres*9)){
-		if (sensorValues[0] >= thres && sensorValues[1] >= thres && sensorValues[2] >= thres && sensorValues[3] >= thres &&
-      sensorValues[4] >= thres && sensorValues[5] >= thres && sensorValues[6] >= thres && sensorValues[7] >= thres && sensorValues[8] >= thres) {
+		if ( sensorValues[1] >= thres && sensorValues[2] >= thres && sensorValues[3] >= thres &&
+		sensorValues[4] >= thres && sensorValues[5] >= thres && sensorValues[6] >= thres && sensorValues[7] >= thres ) {
 			irFull=true;
 		}
 		//checks for side sensors if their readings are weak or not
-		else if(sensorValues[3]>thres && sensorValues[4]>thres){
+		else {  //if(sensorValues[3]>thres && sensorValues[4]>thres||sensorValues[4]>thres && sensorValues[4]>thres || sensorValues[3]>thres && sensorValues[2]>thres){
 			irMid=true;
 		}
-		//else the position is mid cuz there's nothing
-		//readings wont be 0 when nothing cuz physics, else that'd be a problem 
-		else{
-			irNothing=true;
-		}
 	}
+	
 	else if (position<leftbound){
 		irRight=true;
 	}

@@ -4,10 +4,9 @@
 #include "buzzer.h"
 #include "pid.h"
 
-int turningSpeed= 150; //speed that it turns with
-int turningTime= 1500; //time to turn
-int motorspeed1 = 150;
-int motorspeed2 = 150;
+const int turningSpeed= 130; //speed that it turns with
+const int turningTime= 1100; //time to turn
+const int turningTime2= 200;
 
 void setup() {
 	//motor setup
@@ -26,6 +25,7 @@ void setup() {
 	pinMode(buzzerPin, OUTPUT);
 	//indicate the beginning of the end
 	buzzer();
+	forward(turningSpeed,turningSpeed);
 }
 
 void loop() {
@@ -35,18 +35,26 @@ void loop() {
 	if (!irNothing){//checks for line existance
 		if(irMid){//no intersections
 			pidControl();
-			forward(motorspeed1,motorspeed2);
+			forward(motorspeeda,motorspeedb);
 		}
 
 		//follow right wall 
 		else { //intersection or turn
 			if(irRight || irFull) {
+				//buzzer();
 				right(turningSpeed, turningSpeed);
-				delay(turningTime);
+				delay(50);
+				//delay(turningTime);
+				//forward(turningSpeed,turningSpeed);
+				//delay(turningTime2);
 			}
 			else{
+				//buzzer();
 				left(turningSpeed, turningSpeed);
-				delay(turningTime);
+				delay(50);
+				//delay(turningTime);
+				//forward(turningSpeed,turningSpeed);
+				//delay(turningTime2);
 			}
 		}
 	}

@@ -8,6 +8,7 @@ void setup() {
 	for (int i = 0; i < SensorCount; i++) {
 		pinMode(irSensorPins[i], INPUT);
 	}
+	pinMode(irFrontpin, INPUT);
 	
 	//motor setup
 	pinMode(motor1, OUTPUT);
@@ -43,5 +44,7 @@ void loop() {
 	Serial.println(irNothing);
 	Serial.print("irMid: ");
 	Serial.println(irMid);
-	delay(200);
+	Serial.print("irFront: ");
+	Serial.println(frontReading);
+	delay(800);
 }
