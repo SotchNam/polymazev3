@@ -4,6 +4,8 @@
 #include "buzzer.h"
 #include "pid.h"
 
+int turningSpeed= 150; //speed that it turns with
+int turningTime= 1500; //time to turn
 int motorspeed1 = 150;
 int motorspeed2 = 150;
 
@@ -29,12 +31,27 @@ void setup() {
 void loop() {
 	irScan();
 	detectPostion();
-	if(!(irNothing || irFull)){
-		pidControl();	
-		forward(motorspeeda,motorspeedb);
+
+	if (!irNothing){//checks for line existance
+		if(irMid){//no intersections
+			pidControl();
+			forward(motorspeed1,motorspeed2);
+		}
+
+		//follow right wall 
+		else { //intersection or turn
+			if(irRight || irFull) {
+				right(turningSpeed, turningSpeed);
+				delay(turningTime);
+			}
+			else{
+				left(turningSpeed, turningSpeed);
+				delay(turningTime);
+			}
+		}
 	}
-	else{
-		left(motorspeed1,motorspeed2);
-		buzzer();
+
+	else{ //worst case scenario when it doesn't find a line
+		left(turningSpeed,turningSpeed); //rotate till death
 	}
 }
