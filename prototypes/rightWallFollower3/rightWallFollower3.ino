@@ -16,9 +16,9 @@ void task(void *parameter){
 }
 
 const int turningSpeed= 190; //speed that it turns with
-const int turningOff = 30;
-const int turningTime= 300; //time to turn
-const int turningTime2= 300;
+const int turningOff = 70;
+const int turningTime= 600; //time to turn
+const int turningTime2= 600;
 const int stopTime =000;
 bool buzzed =0;
 
@@ -71,6 +71,8 @@ void loop() {
 			irScan();
 			detectPostion();
 			} while (frontReading && irMid);
+			forward(turningSpeed,turningSpeed);
+			delay(turningTime2);
 			if(!buzzed){
 				buzzer();
 			}
@@ -94,6 +96,8 @@ void loop() {
 			detectPostion();
 			delay(turningTime);
 			} while (frontReading && irMid);
+			forward(turningSpeed,turningSpeed);
+			delay(turningTime2);
 			if(!buzzed){
 				buzzer();
 			}
@@ -104,6 +108,7 @@ void loop() {
 
 	else{ //worst case scenario when it doesn't find a line
 		Serial.println("nothing"); 
-		right(200,200); //rotate till death
+		do{right(turningSpeed- turningOff,turningSpeed-turningOff);} //rotate till death
+		while(frontReading );
 	}
 }

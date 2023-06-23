@@ -141,10 +141,10 @@ void detectPostion(){
 		sensorValues[4] >= thres && sensorValues[5] >= thres && sensorValues[6] >= thres ) {
 		irFull=true;
 	}
-	else if ((sensorValues[0]>= thres && sensorValues[1]>=thres ) && (sensorValues[6]<thres && sensorValues[7]<thres )){
+	else if ((sensorValues[0]>= thres && sensorValues[1]>=thres && sensorValues[2]>=thres ) && (sensorValues[6]<thres && sensorValues[7]<thres )){
 		irLeft=true;
 	}
-	else if ((sensorValues[7]>= thres && sensorValues[6]>=thres ) && (sensorValues[0]<thres && sensorValues[1]<thres )){
+	else if ((sensorValues[7]>= thres && sensorValues[6]>=thres && sensorValues[5]>=thres) && (sensorValues[0]<thres && sensorValues[1]<thres )){
 		irRight=true;
 	}
 	else if( (sensorValues[1]>=thres ||sensorValues[2]>=thres ||sensorValues[3]>=thres || sensorValues[4]>=thres || sensorValues[5]>=thres || sensorValues[6]>=thres )){
