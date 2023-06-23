@@ -20,14 +20,14 @@ void forward(int speed1,int speed2){
 	analogWrite(motor2Speed,speed2);
 }
 
-void left(int speed1,int speed2){
+void right(int speed1,int speed2){
 	digitalWrite(motor1,0);
 	digitalWrite(motor2,1);
 	analogWrite(motor1Speed,speed1);
 	analogWrite(motor2Speed,speed2);
 }
 
-void right(int speed1,int speed2){
+void left(int speed1,int speed2){
 	digitalWrite(motor1,1);
 	digitalWrite(motor2,0);
 	analogWrite(motor1Speed,speed1);

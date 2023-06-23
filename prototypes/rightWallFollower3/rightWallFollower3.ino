@@ -15,10 +15,11 @@ void task(void *parameter){
 	}
 }
 
-const int turningSpeed= 170; //speed that it turns with
+const int turningSpeed= 190; //speed that it turns with
 const int turningOff = 30;
-const int turningTime= 1200; //time to turn
-const int turningTime2= 200;
+const int turningTime= 300; //time to turn
+const int turningTime2= 300;
+const int stopTime =000;
 bool buzzed =0;
 
 void setup() {
@@ -56,36 +57,43 @@ void loop() {
 			pidControl();
 			forward(motorspeeda,motorspeedb);
 			buzzed=0;
-			//Serial.println("mid:");
 			buzzerCallback();
 		}
 
 		//follow right wall 
 		else if(irRight || irFull) { //intersection or turn
+			left(0, 0);
+			delay(stopTime);
+			right(turningSpeed-turningOff,turningSpeed);
+			delay(turningTime);
 			do{
-			left(turningSpeed, turningSpeed-turningOff);
+			right(turningSpeed-turningOff,turningSpeed);
 			irScan();
 			detectPostion();
-			} while (frontReading);
-			Serial.println("right:");
-			//delay(turningTime);
-		//	forward(turningSpeed,turningSpeed);
-			//delay(turningTime2);
+			} while (frontReading && irMid);
 			if(!buzzed){
 				buzzer();
 			}
 			buzzed=1;
 		}
-		else if (irLeft){
-			do{
-			right(turningSpeed-turningOff,turningSpeed);
+		
+		else if(frontReading){
 			irScan();
 			detectPostion();
-			} while (frontReading);
-			Serial.println("left:");
-			//delay(turningTime);
-			//forward(turningSpeed,turningSpeed);
 			//delay(turningTime2);
+		}
+
+		else if (irLeft){
+			right(0,0);
+			delay(stopTime);
+			left(turningSpeed, turningSpeed-turningOff);
+			delay(turningTime);
+			do{
+			left(turningSpeed, turningSpeed-turningOff);
+			irScan();
+			detectPostion();
+			delay(turningTime);
+			} while (frontReading && irMid);
 			if(!buzzed){
 				buzzer();
 			}
