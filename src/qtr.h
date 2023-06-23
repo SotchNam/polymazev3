@@ -18,7 +18,7 @@ bool irMid = false;
 
 const int thresFr=1000;
 const int irFrontpin = 27;
-float frontReading = 0;
+int frontReading = 0;
 bool irFront = false;
 
 void irScan(){
@@ -51,7 +51,7 @@ for (int i = 0; i < SensorCount; i++) {
 	sensorValues[7]= analogRead(irSensorPins[7]);
 */
 
-	frontReading = analogRead(irFrontpin);
+	frontReading = digitalRead(irFrontpin);
 
 	//resets vars
 	position=0;

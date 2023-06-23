@@ -15,7 +15,7 @@ void task(void *parameter){
 	}
 }
 
-const int turningSpeed= 150; //speed that it turns with
+const int turningSpeed= 170; //speed that it turns with
 const int turningOff = 30;
 const int turningTime= 1200; //time to turn
 const int turningTime2= 200;
@@ -66,7 +66,7 @@ void loop() {
 			left(turningSpeed, turningSpeed-turningOff);
 			irScan();
 			detectPostion();
-			} while (irFront);
+			} while (frontReading);
 			Serial.println("right:");
 			//delay(turningTime);
 		//	forward(turningSpeed,turningSpeed);
@@ -81,7 +81,7 @@ void loop() {
 			right(turningSpeed-turningOff,turningSpeed);
 			irScan();
 			detectPostion();
-			} while (irFront);
+			} while (frontReading);
 			Serial.println("left:");
 			//delay(turningTime);
 			//forward(turningSpeed,turningSpeed);
