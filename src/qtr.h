@@ -3,24 +3,43 @@
 #define SensorCount 8
 const int irSensorPins[SensorCount] = {25, 36, 39, 34, 35, 32, 33, 26};
 uint16_t sensorValues[SensorCount];
+uint16_t avgsensorValues[SensorCount][5];
 //uint16_t position;
 float position;
 uint16_t readsum;
 const int leftbound = 2000;//3000;
 const int rightbound = 5000;//4000;
-const int thres = 2400; //threshhold value, max sensor reading is 4095
+const int thres = 3100; //threshhold value, max sensor reading is 4095
 bool irFull = false;
 bool irRight = false;
 bool irLeft = false;
 bool irNothing = false;
 bool irMid = false;
 
-const int thresFr=2000;
+const int thresFr=1000;
 const int irFrontpin = 27;
 float frontReading = 0;
 bool irFront = false;
 
 void irScan(){
+
+// Read each sensor 5 times and store the readings in an array
+for (int j = 0; j < 5; j++) {
+	for (int i = 0; i < SensorCount; i++) {
+    avgsensorValues[i][j] = analogRead(irSensorPins[i]);
+  }
+}
+
+// Calculate the average value for each sensor
+for (int i = 0; i < SensorCount; i++) {
+  int sum = 0;
+  for (int j = 0; j < 5; j++) {
+    sum += avgsensorValues[i][j];
+  }
+  sensorValues[i] = sum / 5;
+}
+
+/*
 	//read analog values
 	sensorValues[0]= analogRead(irSensorPins[0]);
 	sensorValues[1]= analogRead(irSensorPins[1]);
@@ -30,6 +49,7 @@ void irScan(){
 	sensorValues[5]= analogRead(irSensorPins[5]);
 	sensorValues[6]= analogRead(irSensorPins[6]);
 	sensorValues[7]= analogRead(irSensorPins[7]);
+*/
 
 	frontReading = analogRead(irFrontpin);
 

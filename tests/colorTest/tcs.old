@@ -13,8 +13,6 @@ Adafruit_TCS34725 tcs = Adafruit_TCS34725();
 //for sensor input
 float red, green, blue;
 
-
-
 //color ranges
 //need changes
 const float lower_bounds[][3] = {
@@ -80,12 +78,15 @@ void detectColor(){
 
 	//detecting the color
 	int i;
-	color = NO_COLOR;
 	for(i=0; i<6; i++){
-		if (red >= lower_bounds[i][0] && red <= upper_bounds[i][0] &&
-		green >= lower_bounds[i][1] && green <= upper_bounds[i][1] &&
-		blue >= lower_bounds[i][2] && blue <= upper_bounds[i][2]) {
+		if (red > lower_bounds[i][0] && red < upper_bounds[i][0] &&
+		green > lower_bounds[i][1] && green < upper_bounds[i][1] &&
+		blue > lower_bounds[i][2] && blue < upper_bounds[i][2]) {
 			color=Colors(i);
+			break;
+		}
+		else { 
+			color = NO_COLOR;
 		}
 	}
 }
@@ -120,7 +121,7 @@ void lightLed(){
 		break;
 		case YELLOW:
 			red = 255;
-			green = 255;
+			green = 225;
 			blue = 0;
 		break;
 		default:
@@ -130,10 +131,7 @@ void lightLed(){
 		break;
 	}
 	//ngl still not sure bout the gammatable but adafruit say it gud so
-	ledcWrite(1,gammatable[(int)red]);
+	ledcWrite(1, gammatable[(int)red]);
 	ledcWrite(2, gammatable[(int)green]);
 	ledcWrite(3, gammatable[(int)blue]);
 }
-
-
-
