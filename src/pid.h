@@ -1,8 +1,8 @@
-float Kp = 0.09; //related to the proportional control term; 
+float Kp = 0.040; //related to the proportional control term; 
 //change the value by trial-and-error (ex: 0.07).
-float Ki = 0.0008; //related to the integral control term; 
+float Ki = 0.0000; //related to the integral control term; 
 //change the value by trial-and-error (ex: 0.0008).
-float Kd = 0.06; //related to the derivative control term; 
+float Kd = 0.50; //related to the derivative control term; 
 //change the value by trial-and-error (ex: 0.6).
 
 int P;
@@ -11,8 +11,10 @@ int D;
 int lastError = 0;
 
 // Motor speed variables (choose between 0 - no speed, and 255 - maximum speed)
-const uint8_t maxspeeda = 235;
-const uint8_t maxspeedb = 235;
+const uint8_t maxspeeda = 215;
+const uint8_t maxspeedb = 215;
+const uint8_t minspeeda = 55;
+const uint8_t minspeedb = 55;
 const uint8_t basespeeda = 110;
 const uint8_t basespeedb = 110;
 int motorspeeda=0;
@@ -39,10 +41,10 @@ void pidControl() {
     motorspeedb = maxspeedb;
   }
   if (motorspeeda < 0) {
-    motorspeeda = 0;
+    motorspeeda = minspeeda;
   }
   if (motorspeedb < 0) {
-    motorspeedb = 0;
+    motorspeedb = minspeedb;
   } 
   //should be in loop
   //setMotors(motorspeeda, motorspeedb);
