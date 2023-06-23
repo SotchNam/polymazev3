@@ -52,19 +52,21 @@ void irScan(){
 
 void detectPostion(){
 	irFront= false;
-	if(frontReading>thresFr) irFront=true;
+	//front ir check
+	if(frontReading>thresFr){
+		irFront=true;
+	}
 
 	irFull= false, irRight= false, irLeft= false, irNothing= false, irMid= false;
-	//ngl hate this binary logic here
-	//pid can use position as error, target is always 4000
+	/*
 	if (position>=leftbound && position <=rightbound) {
-		//checks if all (not most) readings are high
 
+		//checks if all (not most) readings are high
 		if ( sensorValues[1] >= thres && sensorValues[2] >= thres && sensorValues[3] >= thres &&
 		sensorValues[4] >= thres && sensorValues[5] >= thres && sensorValues[6] >= thres && sensorValues[7] >= thres ) {
 			irFull=true;
 		}
-		//checks for side sensors if their readings are weak or not
+		//checks for middle sensors if their readings are strong
 		else if(sensorValues[3]>thres && sensorValues[4]>thres||sensorValues[4]>thres && sensorValues[4]>thres || sensorValues[3]>thres && sensorValues[2]>thres){
 			irMid=true;
 		}
@@ -79,5 +81,56 @@ void detectPostion(){
 	}
 	else if (position>rightbound){
 		irLeft=true;
+	}
+	*/
+
+
+	/*
+	if (position>=leftbound && position <=rightbound && sensorValues[1] >= thres && sensorValues[2] >= thres && sensorValues[3] >= thres &&
+		sensorValues[4] >= thres && sensorValues[5] >= thres && sensorValues[6] >= thres ) {
+		//checks if all (not most) readings are high
+		irFull=true;
+	}
+
+		//checks for middle sensors if their readings are strong
+		//else if(sensorValues[5]>thres && sensorValues[4]>thres||sensorValues[4]>thres && sensorValues[3]>thres || sensorValues[3]>thres && sensorValues[2]>thres)
+	else if(position>=leftbound && position <=rightbound && (sensorValues[2]>thres || sensorValues[3]>thres || sensorValues[4]>thres || sensorValues[5]>thres)){
+		irMid=true;
+	
+	}
+
+	//else if ( sensorValues[1]<thres && sensorValues[2]<thres && sensorValues[3]<thres && sensorValues[4]<thres && sensorValues[5]<thres && sensorValues[6]<thres ){
+		//irNothing=true;
+	//}
+
+	else if (position<(leftbound + 1500) && (sensorValues[1]>thres || sensorValues[0]>thres)){
+		irLeft=true;
+	}
+
+	else if (position>(rightbound -1500)&& (sensorValues[6]>thres  || sensorValues[7]>thres) ){
+		irRight=true;
+	}
+	else{
+		irNothing= true;
+	}
+	*/
+	
+	//if (sensorValues[0]<thres && sensorValues[1] < thres && (sensorValues[2] >= thres || sensorValues[3] >= thres ||
+	//	sensorValues[4] >= thres || sensorValues[5] >= thres) && sensorValues[6] < thres && sensorValues[7] < thres ) {
+	if ( sensorValues[1] >= thres && sensorValues[2] >= thres && sensorValues[3] >= thres &&
+		sensorValues[4] >= thres && sensorValues[5] >= thres && sensorValues[6] >= thres ) {
+		irFull=true;
+	}
+	else if ((sensorValues[0]>= thres && sensorValues[1]>=thres ) && (sensorValues[6]<thres && sensorValues[7]<thres )){
+		irLeft=true;
+	}
+	else if ((sensorValues[7]>= thres && sensorValues[6]>=thres ) && (sensorValues[0]<thres && sensorValues[1]<thres )){
+		irRight=true;
+	}
+	else if( (sensorValues[1]>=thres ||sensorValues[2]>=thres ||sensorValues[3]>=thres || sensorValues[4]>=thres || sensorValues[5]>=thres || sensorValues[6]>=thres )){
+		irMid=true;
+	}
+	else{
+		irNothing=true;
 	}
 }

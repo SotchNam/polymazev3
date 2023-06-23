@@ -89,8 +89,8 @@ void detectColor(){
 }
 
 //output detected color to the rgb led, values should be ok
-void lightLed(){
-	switch (color){
+void lightLed(Colors input){
+	switch (input){
 		case RED:
 			red = 255;
 			green = 0;

@@ -21,6 +21,6 @@ void buzzer() {
     timerAlarmWrite(buzzerTimer, 40000, false); // Set the alarm for 100ms
     timerAlarmEnable(buzzerTimer); // Enable the timer alarm
   } else {
-    timerRestart(buzzerTimer); // Restart the timer
+    //timerRestart(buzzerTimer); // Restart the timer
   }
 }

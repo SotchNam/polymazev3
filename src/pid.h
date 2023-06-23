@@ -1,8 +1,9 @@
-float Kp = 0.040; //related to the proportional control term; 
+float Kp = 0.045; //related to the proportional control term; 
+//
 //change the value by trial-and-error (ex: 0.07).
 float Ki = 0.0000; //related to the integral control term; 
 //change the value by trial-and-error (ex: 0.0008).
-float Kd = 0.50; //related to the derivative control term; 
+float Kd = 0.75; //related to the derivative control term; 
 //change the value by trial-and-error (ex: 0.6).
 
 int P;
